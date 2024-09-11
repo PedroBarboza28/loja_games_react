@@ -6,9 +6,10 @@ import { Navbar } from './pages/navbar/Navbar'
 function App() {
   return (
     <>
-      <Navbar />
+      <Navbar/>
       <Home />
       <Footer />
+      
     </>
   )
 }
