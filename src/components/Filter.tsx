@@ -28,7 +28,7 @@ export const Filtro: React.FC<FiltroProps> = ({ onFiltrar }) => {
   }, [precoMax, marcasSelecionadas, classificacao]);
 
   return (
-    <div className="w-[279px] border border-[#e7e7e7] rounded-lg p-4 px-0 shadow-sm">
+    <div className="w-[279px] border border-[#e7e7e7] rounded-lg p-4 px-0 shadow-sm mb-10">
       <h2 className="font-bold flex items-center ml-3 mb-4">Filtrar Jogos por</h2>
       <div className="border-t border-gray-300 w-full m-0 mx-0" />
 
