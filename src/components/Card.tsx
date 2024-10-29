@@ -20,7 +20,7 @@ const Card: React.FC<CardProps> = ({ name, imageUrl, year, platform, purchasePri
         <img 
           src={imageUrl} 
           alt={name} 
-          className="absolute top-0 left-0 w-full h-full object-cover" 
+          className="absolute top-0 left-0 w-full h-full object-contain" // Usando object-contain para evitar cortes
         />
       </div>
 
