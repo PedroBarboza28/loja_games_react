@@ -15,7 +15,7 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ name, imageUrl, year, platform, purchasePrice, description, rating }) => {
   return (
-<div className="relative w-[250px] h-[450px] sm:w-[300px] sm:h-[500px] md:w-[250px] md:h-[450px] rounded overflow-hidden border border-solid border-neutral-100">
+<div className="relative w-[350px] h-[650px] sm:w-[300px] sm:h-[550px] md:w-[350px] md:h-[650px] rounded overflow-hidden border border-solid border-neutral-100">
 <div className="absolute w-[250px] h-[273px] top-0 left-0">
         <div className="relative h-[273px]">
           <div className="absolute w-[250px] h-[273px] top-0 left-0">
