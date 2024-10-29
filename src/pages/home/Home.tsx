@@ -151,11 +151,11 @@ const Home = () => {
         <section className="py-0">
           <div className="container mx-auto">
             <div className="flex flex-col md:flex-row mt-10 mb-10 w-full"> {/* Flex-col para o layout vertical */}
-              <div className="w-full md:w-1/4">
+              <div className="w-full md:w-1/4 md:mr-10">
                 <Filtro onFiltrar={aplicarFiltros} />
               </div>
               <div className="w-full md:w-3/4 flex flex-col items-center"> {/* Flex-col e centralizando */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8 "> {/* Mantendo grid */}
+                <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8 "> {/* Mantendo grid */}
                   {jogosFiltrados.map((game) => (
                     <Card
                       key={game.id}
