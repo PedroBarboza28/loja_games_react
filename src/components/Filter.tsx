@@ -1,17 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import Rating from "./Classificacao";
 
 interface FiltroProps {
-  image: string;
-  label: string;
+  onFiltrar: (filtros: { precoMax: number; marcas: string[]; classificacao: number }) => void;
 }
 
-export const Filtro: React.FC<FiltroProps> = ({ image }) => {
-  // Estados para controlar os valores do range
-  const [precoMin, setPrecoMin] = useState(0);
-  const [precoMax] = useState(1000);
+export const Filtro: React.FC<FiltroProps> = ({ onFiltrar }) => {
+  const [precoMax, setPrecoMax] = useState(1000); // Preço máximo padrão
   const [marcasSelecionadas, setMarcasSelecionadas] = useState<string[]>([]);
+  const [classificacao, setClassificacao] = useState(3); // Defina uma classificação padrão
 
-  const marcas = ['PS4', 'Xbox One', 'PS5'];
+  const marcas = ["PS4", "Xbox One", "PS5"];
 
   const handleMarcaChange = (marca: string) => {
     setMarcasSelecionadas((prev) =>
@@ -19,32 +18,43 @@ export const Filtro: React.FC<FiltroProps> = ({ image }) => {
     );
   };
 
+  const aplicarFiltros = () => {
+    onFiltrar({ precoMax, marcas: marcasSelecionadas, classificacao });
+  };
+
+  // Chame aplicarFiltros quando o valor do filtro mudar
+  React.useEffect(() => {
+    aplicarFiltros();
+  }, [precoMax, marcasSelecionadas, classificacao]);
+
   return (
-    <div className="w-[279px]">
+    <div className="w-[279px] border border-[#e7e7e7] rounded-lg p-4 px-0 shadow-sm">
+      <h2 className="font-bold flex items-center ml-3 mb-4">Filtrar Jogos por</h2>
+      <div className="border-t border-gray-300 w-full m-0 mx-0" />
+
       {/* Filtro de Classificação */}
-      <div id="classificacao" className="relative w-[279px] h-[22px] mb-4">
-        <img
-          className="absolute w-[95px] h-[22px] -top-0.5 left-0"
-          alt="Image"
-          src={image}
-        />
-        <div className="absolute w-[42px] h-3.5 top-px left-[100px] font-normal text-[#0f1111] text-[11.4px] leading-4">
-          e acima
+      <div id="classificacao" className="p-3 mb-4">
+        <h3 className="flex items-center font-bold mb-2">Classificação</h3>
+        <div className="flex items-center">
+          <Rating rating={classificacao} onRatingChange={setClassificacao} />
+          <div className="ml-2 font-normal text-[#0f1111] text-[11.4px] leading-4">e acima</div>
         </div>
       </div>
 
+      <hr className="border-t border-gray-300 my-4" />
+
       {/* Filtro de Marcas */}
-      <div id="marcas" className="relative w-[279px] mb-4">
-      <h1 className='flex items-center font-bold'>Marcas</h1>
+      <div id="marcas" className="p-3 mb-4">
+        <h3 className="flex items-center font-bold mb-2">Marcas</h3>
         <div className="flex flex-col space-y-3">
-          {marcas.map((marca, index) => (
-            <div key={index} className="flex items-center">
+          {marcas.map((marca) => (
+            <div key={marca} className="flex items-center">
               <input
                 type="checkbox"
                 id={marca}
                 checked={marcasSelecionadas.includes(marca)}
                 onChange={() => handleMarcaChange(marca)}
-                className="w-4 h-4 accent-blue-500" // Muda a cor do checkbox se desejado
+                className="w-4 h-4 accent-blue-500"
               />
               <label htmlFor={marca} className="ml-2 text-[#0f1111] text-[13.5px]">
                 {marca}
@@ -54,23 +64,24 @@ export const Filtro: React.FC<FiltroProps> = ({ image }) => {
         </div>
       </div>
 
+      <hr className="border-t border-gray-300 my-4" />
+
       {/* Filtro de Preço */}
-      <div id="preco" className="relative w-[279px] h-[120px] mb-4">
-        <h1 className='flex items-center font-bold'>Preço</h1>
+      <div id="preco" className="p-3">
+        <h3 className="flex items-center font-bold mb-2">Preço</h3>
         <div className="flex items-center mb-2">
-          <span className="font-bold text-[#0f1111]">R${precoMin}</span>
+          <span className="font-bold text-[#0f1111]">R$0</span>
           <span className="font-bold mx-2">-</span>
-          <span className="font-bold text-[#0f1111]">R${precoMax} </span>
+          <span className="font-bold text-[#0f1111]">R${precoMax}</span>
         </div>
 
-        {/* Controle deslizante (Range) */}
         <input
           type="range"
           min="0"
           max="1000"
           step="10"
-          value={precoMin}
-          onChange={(e) => setPrecoMin(Number(e.target.value))}
+          value={precoMax}
+          onChange={(e) => setPrecoMax(Number(e.target.value))}
           className="w-full mb-2"
         />
       </div>
