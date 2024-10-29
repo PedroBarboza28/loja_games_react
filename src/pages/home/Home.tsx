@@ -12,7 +12,7 @@ const games = [
     imageUrl:
       "https://ik.imagekit.io/netdmdufko/flight.png?updatedAt=1722113634898",
     year: 2023,
-    rating: 3.5, // Adicione a classificação aqui
+    rating: 3.0, // Adicione a classificação aqui
     platform: "North Games",
     purchasePrice: "$299.99",
     description: "Uma simulação incrível de pilotagem.",
@@ -24,7 +24,7 @@ const games = [
     imageUrl:
       "https://ik.imagekit.io/netdmdufko/god.png?updatedAt=1722113706172",
     year: 2022,
-    rating: 3.5, // Adicione a classificação aqui
+    rating: 3.0, // Adicione a classificação aqui
     platform: "North Games",
     purchasePrice: "$399.99",
     description: "Uma jornada intensa em reinos antigos.",
@@ -36,7 +36,7 @@ const games = [
     imageUrl:
       "https://ik.imagekit.io/netdmdufko/fifa_23-min.png?updatedAt=1722113727673",
     year: 2021,
-    rating: 4.5, // Adicione a classificação aqui
+    rating: 4.0, // Adicione a classificação aqui
     platform: "North Games",
     purchasePrice: "$499.99",
     description: "Um jogo de futebol incrível.",
@@ -48,7 +48,7 @@ const games = [
     imageUrl:
       "https://ik.imagekit.io/netdmdufko/hogwarts.png?updatedAt=1722113683981",
     year: 2020,
-    rating: 4.5, // Adicione a classificação aqui
+    rating: 4.0, // Adicione a classificação aqui
     platform: "North Games",
     purchasePrice: "$599.99",
     description: "Uma aventura mágica empolgante.",
@@ -96,7 +96,7 @@ const games = [
     imageUrl:
       "https://ik.imagekit.io/netdmdufko/mortal%20kombat.webp?updatedAt=1729522107646",
     year: 2020,
-    rating: 4.5, // Adicione a classificação aqui
+    rating: 4.0, // Adicione a classificação aqui
     platform: "North Games",
     purchasePrice: "$99.99",
     description: "Um jogo de luta eletrizante.",
@@ -108,7 +108,7 @@ const games = [
     imageUrl:
       "https://ik.imagekit.io/netdmdufko/boruto.webp?updatedAt=1729522276288",
     year: 2023,
-    rating: 4.5, // Adicione a classificação aqui
+    rating: 5.0, // Adicione a classificação aqui
     platform: "North Games",
     purchasePrice: "$109.99",
     description: "Uma nova jornada épica começa.",
@@ -121,6 +121,8 @@ const Home = () => {
     marcas: string[];
     classificacao: number;
   }>({ precoMax: 1000, marcas: [], classificacao: 3 });
+
+  const [mostrarLinks, setMostrarLinks] = useState(false);
 
   const aplicarFiltros = (novosFiltros: {
     precoMax: number;
@@ -143,37 +145,68 @@ const Home = () => {
   return (
     <>
       <Carrossel />
-      <div className="flex flex-col items-center"> {/* Centralizando o conteúdo */}
+      <div className="flex flex-col items-center">
         <section className="relative py-0 m-0">
           {/* Seu código para a seção de apresentação */}
         </section>
 
         <section className="py-0">
-          <div className="container mx-auto">
-            <div className="flex flex-col md:flex-row mt-10 mb-10 w-full"> {/* Flex-col para o layout vertical */}
-              <div className="w-full md:w-1/4 md:mr-10">
-                <Filtro onFiltrar={aplicarFiltros} />
+          <div className="container sm:mx-5 mx-auto">
+            <div className="flex flex-col md:flex-row mt-10 mb-10 w-full">
+              <div className="w-full md:w-1/4 md:mr-10 hidden sm:block">
+                <Filtro onFiltrar={aplicarFiltros} />{" "}
+                {/* Componente de filtro */}
               </div>
-              <div className="w-full md:w-3/4 flex flex-col items-center"> {/* Flex-col e centralizando */}
-                <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8 "> {/* Mantendo grid */}
-                  {jogosFiltrados.map((game) => (
-                    <Card
-                      key={game.id}
-                      name={game.name}
-                      brand={game.brand}
-                      imageUrl={game.imageUrl}
-                      year={game.year}
-                      rating={game.rating}
-                      platform={game.platform}
-                      purchasePrice={game.purchasePrice}
-                      description={game.description}
-                    />
-                  ))}
+
+              <div className="relative">
+                <button
+                  onClick={() => setMostrarLinks(!mostrarLinks)}
+                  className="px-4 py-2 bg-blue-500 text-white rounded-md mb-10 md:hidden"
+                >
+                  Filtro
+                </button>
+
+                {mostrarLinks && (
+                  <div className="absolute mt-2 p-4 bg-white shadow-lg rounded-md z-10">
+                    <h3 className="text-lg font-semibold">Selecione um Link</h3>
+                    <div className="w-full md:w-1/4 md:mr-10">
+                      <Filtro onFiltrar={aplicarFiltros} />{" "}
+                      {/* Outro componente de filtro para seleção */}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className="w-full md:w-3/4 flex flex-col items-center">
+                {/* Grid que organiza os cards dos jogos */}
+                <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
+                  {jogosFiltrados.length > 0 ? (
+                    jogosFiltrados.map((game) => (
+                      <Card
+                        key={game.id}
+                        name={game.name}
+                        brand={game.brand}
+                        imageUrl={game.imageUrl}
+                        year={game.year}
+                        rating={game.rating}
+                        platform={game.platform}
+                        purchasePrice={game.purchasePrice}
+                        description={game.description}
+                      />
+                    ))
+                  ) : (
+                    <div className="flex items-center justify-center w-full h-5 mx-auto">
+                      <p className="font-bold text-center">
+                        Nenhum jogo encontrado.
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
           </div>
         </section>
+
         <div className="flex mb-10 justify-center font-serif">
           jogo(s) encontrado(s): {jogosFiltrados.length}
         </div>
