@@ -1,60 +1,39 @@
-// Card.tsx
 import React from 'react';
 import Rating from './Classificacao';
 
 interface CardProps {
     name: string;
-    imageUrl: string; // Adicione essa propriedade
+    imageUrl: string;
     brand: string;
     year: number;
     platform: string;
     rating: number;
-    purchasePrice: any;
+    purchasePrice: string;
     description: string;
 }
 
 const Card: React.FC<CardProps> = ({ name, imageUrl, year, platform, purchasePrice, description, rating }) => {
   return (
-<div className="relative w-[350px] h-[650px] sm:w-[300px] sm:h-[550px] md:w-[350px] md:h-[650px] rounded overflow-hidden border border-solid border-neutral-100">
-<div className="absolute w-[250px] h-[273px] top-0 left-0">
-        <div className="relative h-[273px]">
-          <div className="absolute w-[250px] h-[273px] top-0 left-0">
-            <div
-              className="relative w-[205px] h-[273px] left-[22px] bg-cover"
-              style={{ backgroundImage: `url(${imageUrl})` }}
-            />
-          </div>
-          <div className="absolute w-[250px] h-[273px] top-0 left-0 bg-black opacity-[0.03]" />
+    <div className="relative w-full max-w-xs md:w-[250px] md:h-[450px] rounded overflow-hidden border border-solid border-neutral-100">
+      {/* Ajustando o contêiner da imagem */}
+      <div className="relative w-full h-0 pb-[100%] overflow-hidden">
+        <img 
+          src={imageUrl} 
+          alt={name} 
+          className="absolute top-0 left-0 w-full h-full object-cover" 
+        />
+      </div>
+
+      {/* Ajustando o conteúdo */}
+      <div className="p-3 text-left">
+        <p className="font-normal text-[#0f1111] text-[15.1px] leading-6 mb-2">{name}</p>
+        <div className="text-[#565959] text-[12.6px] leading-5 mb-1">{year}</div>
+        <div className="font-bold text-[#007185] text-[13.6px] mb-1">{platform}</div>
+        <div className="font-normal text-[#0f1111] text-[13.1px] mb-1">Comprar por {purchasePrice}</div>
+        <p className="font-normal text-[#565959] text-[13.2px] mb-1">{description}</p>
+        <div className="mt-2">
+          <Rating rating={rating} onRatingChange={() => {}} /> {/* Classe rating */}
         </div>
-      </div>
-      <div className="absolute w-[250px] h-12 top-[280px] left-[9px] text-left">
-        <p className="font-normal text-[#0f1111] text-[15.1px] leading-6 mb-2">
-          {name}
-        </p>
-      </div>
-      <div className="absolute left-[9px] top-[330px]">
-        <div className="text-[#565959] text-[12.6px] leading-5 mb-1">
-          {year}
-        </div>
-      </div>
-      <div className="absolute left-[9px] top-[355px]">
-        <div className="font-bold text-[#007185] text-[13.6px] mb-1">
-          {platform}
-        </div>
-      </div>
-      <div className="absolute left-[9px] top-[375px]">
-        <div className="font-normal text-[#0f1111] text-[13.1px] mb-1">
-          Comprar por {purchasePrice}
-        </div>
-      </div>
-      <p className="absolute left-[9px] top-[395px] font-normal text-[#565959] text-[13.2px] mb-1">
-        {description}
-      </p>
-      {/* Renderizando a classificação */}
-      <div className="absolute top-[410px] left-[9px]">
-        <Rating rating={rating} onRatingChange={function (_rating: number): void {
-          throw new Error('Function not implemented.');
-        } } /> {/* Passando a classificação aqui */}
       </div>
     </div>
   );
