@@ -1,8 +1,15 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  padding: 0;
   text-align: center;
+}
+
+* {
+  margin: 0; /* Zera todas as margens (superior, inferior, esquerda, direita) */
+  padding: 0; /* Opcional */
+  box-sizing: border-box;
 }
 
 .logo {

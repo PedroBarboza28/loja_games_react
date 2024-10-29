@@ -5,6 +5,7 @@ import Rating from './Classificacao';
 interface CardProps {
     name: string;
     imageUrl: string; // Adicione essa propriedade
+    brand: string;
     year: number;
     platform: string;
     rating: number;
@@ -50,8 +51,10 @@ const Card: React.FC<CardProps> = ({ name, imageUrl, year, platform, purchasePri
         {description}
       </p>
       {/* Renderizando a classificação */}
-      <div className="absolute top-[420px] left-[9px]">
-        <Rating rating={rating} /> {/* Passando a classificação aqui */}
+      <div className="absolute top-[410px] left-[9px]">
+        <Rating rating={rating} onRatingChange={function (_rating: number): void {
+          throw new Error('Function not implemented.');
+        } } /> {/* Passando a classificação aqui */}
       </div>
     </div>
   );
