@@ -146,26 +146,27 @@ const Home = () => {
     <>
       <Carrossel />
       <div className="flex flex-col items-center">
+        {/* Botão de Filtro grudado ao carrossel */}
+        <button
+          onClick={() => setMostrarLinks(!mostrarLinks)}
+          className="px-4 py-2 text-white mb-2 md:hidden w-full bg-blue-500"
+        >
+          Filtro
+        </button>
+  
         <section className="relative py-0 m-0">
           {/* Seu código para a seção de apresentação */}
         </section>
-
-        <section className="py-0">
+  
+        <section className="py-0 ">
           <div className="container sm:mx-5 mx-auto">
             <div className="flex flex-col md:flex-row mt-10 mb-10 w-full">
               <div className="w-full md:w-1/4 md:mr-10 hidden sm:block">
                 <Filtro onFiltrar={aplicarFiltros} />{" "}
                 {/* Componente de filtro */}
               </div>
-
+  
               <div className="relative">
-                <button
-                  onClick={() => setMostrarLinks(!mostrarLinks)}
-                  className="px-4 py-2 bg-blue-500 text-white rounded-md mb-10 md:hidden"
-                >
-                  Filtro
-                </button>
-
                 {mostrarLinks && (
                   <div className="absolute mt-2 p-4 bg-white shadow-lg rounded-md z-10">
                     <h3 className="text-lg font-semibold">Selecione um Link</h3>
@@ -176,7 +177,7 @@ const Home = () => {
                   </div>
                 )}
               </div>
-
+  
               <div className="w-full md:w-3/4 flex flex-col items-center">
                 {/* Grid que organiza os cards dos jogos */}
                 <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
@@ -206,13 +207,14 @@ const Home = () => {
             </div>
           </div>
         </section>
-
+  
         <div className="flex mb-10 justify-center font-serif">
           jogo(s) encontrado(s): {jogosFiltrados.length}
         </div>
       </div>
     </>
   );
+  
 };
 
 export default Home;
