@@ -1,16 +1,16 @@
-import { useState } from "react";
-import { Filtro } from "../../components/Filter"; // Certifique-se de que o caminho esteja correto
+import { Filtro } from "../../components/Filter";
 import Card from "../../components/Card";
 import Carrossel from "../../components/carrossel/Carrossel";
+import { useState } from "react";
 
 const games = [
-  // ... seus jogos aqui ...
   {
     id: 1,
     name: "Flight Simulator",
     brand: "Xbox One",
     imageUrl:
       "https://ik.imagekit.io/netdmdufko/flight.png?updatedAt=1722113634898",
+    category: "Simulator",
     year: 2023,
     rating: 3.0, // Adicione a classificação aqui
     platform: "North Games",
@@ -23,6 +23,7 @@ const games = [
     brand: "PS5",
     imageUrl:
       "https://ik.imagekit.io/netdmdufko/god.png?updatedAt=1722113706172",
+    category: "Aventura",
     year: 2022,
     rating: 3.0, // Adicione a classificação aqui
     platform: "North Games",
@@ -35,6 +36,7 @@ const games = [
     brand: "Xbox One",
     imageUrl:
       "https://ik.imagekit.io/netdmdufko/fifa_23-min.png?updatedAt=1722113727673",
+    category: "Esporte",
     year: 2021,
     rating: 4.0, // Adicione a classificação aqui
     platform: "North Games",
@@ -47,6 +49,7 @@ const games = [
     brand: "PS5",
     imageUrl:
       "https://ik.imagekit.io/netdmdufko/hogwarts.png?updatedAt=1722113683981",
+    category: "Aventura",
     year: 2020,
     rating: 4.0, // Adicione a classificação aqui
     platform: "North Games",
@@ -59,6 +62,7 @@ const games = [
     brand: "PS5",
     imageUrl:
       "https://ik.imagekit.io/netdmdufko/spiderman.png?updatedAt=1722113651917",
+    category: "Luta",
     year: 2023,
     rating: 3.0, // Adicione a classificação aqui
     platform: "North Games",
@@ -71,6 +75,7 @@ const games = [
     brand: "PS4",
     imageUrl:
       "https://ik.imagekit.io/netdmdufko/jogo%20one%20piece%20ps4.webp?updatedAt=1729518490566",
+    category: "Aventura",
     year: 2022,
     rating: 5.0, // Adicione a classificação aqui
     platform: "North Games",
@@ -83,6 +88,7 @@ const games = [
     brand: "PS4",
     imageUrl:
       "https://ik.imagekit.io/netdmdufko/one%20piece%20jogo%20ps4%202.jpeg?updatedAt=1729519209697",
+    category: "Aventura",
     year: 2021,
     rating: 5.0, // Adicione a classificação aqui
     platform: "North Games",
@@ -95,6 +101,7 @@ const games = [
     brand: "PS5",
     imageUrl:
       "https://ik.imagekit.io/netdmdufko/mortal%20kombat.webp?updatedAt=1729522107646",
+    category: "Luta",
     year: 2020,
     rating: 4.0, // Adicione a classificação aqui
     platform: "North Games",
@@ -107,6 +114,7 @@ const games = [
     brand: "PS5",
     imageUrl:
       "https://ik.imagekit.io/netdmdufko/boruto.webp?updatedAt=1729522276288",
+    category: "Aventura",
     year: 2023,
     rating: 5.0, // Adicione a classificação aqui
     platform: "North Games",
@@ -116,70 +124,110 @@ const games = [
 ];
 
 const Home = () => {
-  const [filtros, setFiltros] = useState<{
-    precoMax: number;
-    marcas: string[];
-    classificacao: number;
-  }>({ precoMax: 1000, marcas: [], classificacao: 3 });
+  const [filtros, setFiltros] = useState({
+    precoMax: 1000,
+    marcas: [] as string[],  // Ajuste para um array de strings
+    classificacao: 3,
+  });
 
   const [mostrarLinks, setMostrarLinks] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  const aplicarFiltros = (novosFiltros: {
-    precoMax: number;
-    marcas: string[];
-    classificacao: number;
-  }) => {
+  const aplicarFiltros = (novosFiltros: { precoMax: number; marcas: string[]; classificacao: number; }) => {
     setFiltros(novosFiltros);
   };
 
   const jogosFiltrados = games.filter((game) => {
-    const marcaMatch =
-      filtros.marcas.length === 0 || filtros.marcas.includes(game.brand);
+    const marcaMatch = filtros.marcas.length === 0 || filtros.marcas.includes(game.brand);
     const classificacaoMatch = game.rating >= filtros.classificacao;
-    const precoMatch =
-      parseFloat(game.purchasePrice.replace("$", "")) <= filtros.precoMax;
+    const precoMatch = parseFloat(game.purchasePrice.replace("$", "")) <= filtros.precoMax;
+    const categoriaMatch = selectedCategory === null || game.category === selectedCategory;
 
-    return marcaMatch && classificacaoMatch && precoMatch;
+    return marcaMatch && classificacaoMatch && precoMatch && categoriaMatch;
   });
+
+  const categories = [
+    {
+      imageCategory:
+        "https://ik.imagekit.io/netdmdufko/categoria%20simulador.jpeg?updatedAt=1730249903151",
+      category: "Simulator",
+    },
+    {
+      imageCategory:
+        "https://ik.imagekit.io/netdmdufko/categoria%20aventura.jpeg?updatedAt=1730249887306",
+      category: "Aventura",
+    },
+    {
+      imageCategory:
+        "https://ik.imagekit.io/netdmdufko/categoria%20luta.jpeg?updatedAt=1730249887102",
+      category: "Luta",
+    },
+    {
+      imageCategory:
+        "https://ik.imagekit.io/netdmdufko/categoria%20esportes.jpeg?updatedAt=1730249886822",
+      category: "Esporte",
+    },
+    // ... (outras categorias)
+  ];
+
+  const renderCategoriesIcons = (icons: { category: string; imageCategory: string }[]) => (
+    <div className="flex flex-row overflow-x-auto space-x-4">
+      {icons.map((icon, index) => (
+        <div
+          key={index}
+          className="tech-item flex flex-col items-center cursor-pointer mb-1"
+          onClick={() => setSelectedCategory(selectedCategory === icon.category ? null : icon.category)}
+        >
+          <img
+            src={icon.imageCategory}
+            alt={icon.category}
+            className={`w-16 h-16 rounded-full ${selectedCategory === icon.category ? "border-2 border-blue-500" : ""}`}
+          />
+          <span className="text-center">{icon.category}</span>
+        </div>
+      ))}
+    </div>
+  );
 
   return (
     <>
       <Carrossel />
       <div className="flex flex-col items-center">
-        {/* Botão de Filtro grudado ao carrossel */}
         <button
           onClick={() => setMostrarLinks(!mostrarLinks)}
           className="px-4 py-2 text-white mb-2 md:hidden w-full bg-blue-500"
         >
           Filtro
         </button>
-  
-        <section className="relative py-0 m-0">
-          {/* Seu código para a seção de apresentação */}
-        </section>
-  
-        <section className="py-0 ">
+
+        <section className="py-0">
           <div className="container sm:mx-5 mx-auto">
+            <div className="relative">
+              {mostrarLinks && (
+                <div className="absolute mt-2 p-4 bg-white shadow-lg rounded-md z-10">
+                  <h3 className="text-lg font-semibold">Selecione um Link</h3>
+                  <div className="w-full md:w-1/4 md:mr-10">
+                    <Filtro onFiltrar={aplicarFiltros} />
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="w-full max-w-4x4 p-4 mt-5 shadow-md rounded-lg md:hidden">
+              <div className="animate-marquee">
+                <h3 className="flex font-bold mb-3 justify-start">
+                  Navegue por categoria
+                </h3>
+                {renderCategoriesIcons(categories)}
+              </div>
+            </div>
+
             <div className="flex flex-col md:flex-row mt-10 mb-10 w-full">
               <div className="w-full md:w-1/4 md:mr-10 hidden sm:block">
-                <Filtro onFiltrar={aplicarFiltros} />{" "}
-                {/* Componente de filtro */}
+                <Filtro onFiltrar={aplicarFiltros} />
               </div>
-  
-              <div className="relative">
-                {mostrarLinks && (
-                  <div className="absolute mt-2 p-4 bg-white shadow-lg rounded-md z-10">
-                    <h3 className="text-lg font-semibold">Selecione um Link</h3>
-                    <div className="w-full md:w-1/4 md:mr-10">
-                      <Filtro onFiltrar={aplicarFiltros} />{" "}
-                      {/* Outro componente de filtro para seleção */}
-                    </div>
-                  </div>
-                )}
-              </div>
-  
+
               <div className="w-full md:w-3/4 flex flex-col items-center">
-                {/* Grid que organiza os cards dos jogos */}
                 <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
                   {jogosFiltrados.length > 0 ? (
                     jogosFiltrados.map((game) => (
@@ -197,9 +245,7 @@ const Home = () => {
                     ))
                   ) : (
                     <div className="flex items-center justify-center w-full h-5 mx-auto">
-                      <p className="font-bold text-center">
-                        Nenhum jogo encontrado.
-                      </p>
+                      Nenhum jogo encontrado
                     </div>
                   )}
                 </div>
@@ -207,14 +253,9 @@ const Home = () => {
             </div>
           </div>
         </section>
-  
-        <div className="flex mb-10 justify-center font-serif">
-          jogo(s) encontrado(s): {jogosFiltrados.length}
-        </div>
       </div>
     </>
   );
-  
 };
 
 export default Home;
