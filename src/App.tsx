@@ -4,6 +4,7 @@ import Home from "./pages/home/Home";
 import { Navbar } from "./components/navbar/Navbar";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { MenuProvider } from "./context/Context";
+import Flight from "./components/gameDetail/Flight";
 
 function App() {
   return (
@@ -13,6 +14,8 @@ function App() {
         
         <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/flight" element={<Flight />} /> {/* Rota para Projects */}
+
         </Routes>
 
         <Footer />
