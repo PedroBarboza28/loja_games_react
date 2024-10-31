@@ -4,7 +4,7 @@ import Home from "./pages/home/Home";
 import { Navbar } from "./components/navbar/Navbar";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { MenuProvider } from "./context/Context";
-import Flight from "./components/gameDetail/flight";
+import Flight from "./components/gamedetail/Flight";
 
 function App() {
   return (
