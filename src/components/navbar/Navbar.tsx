@@ -6,7 +6,10 @@ export const Navbar = () => {
 
   return (
     <div className="flex items-center py-5 pb-2 pt-2 md:pt-5 md:pb-5 mr-10 justify-between space-x-4 overflow-auto">
-      <h2 className="text-xl font-bold ml-10">North Games</h2>
+      <a href="/"><h2 className="text-xl font-bold ml-10">
+        <span className="text-blabk">North</span>
+        <span className="text-black">Games</span>
+      </h2> </a>
 
       <button
         onClick={toggleMenu}

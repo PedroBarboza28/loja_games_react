@@ -3,7 +3,22 @@ import Card from "../../components/Card";
 import Carrossel from "../../components/carrossel/Carrossel";
 import { useState } from "react";
 
-const games = [
+interface Game {
+  id: number;
+  name: string;
+  brand: string;
+  imageUrl: string;
+  category: string;
+  year: number;
+  rating: number;
+  platform: string;
+  purchasePrice: number;
+  description: string;
+  redirectPath?: string; // Tornar essa propriedade opcional
+}
+
+const games: Game[] = [
+  // ... (seus dados dos jogos)
   {
     id: 1,
     name: "Flight Simulator",
@@ -14,8 +29,9 @@ const games = [
     year: 2023,
     rating: 3.0, // Adicione a classificação aqui
     platform: "North Games",
-    purchasePrice: "$299.99",
+    purchasePrice: 299.99,
     description: "Uma simulação incrível de pilotagem.",
+    redirectPath: "/flight"
   },
   {
     id: 2,
@@ -27,7 +43,7 @@ const games = [
     year: 2022,
     rating: 3.0, // Adicione a classificação aqui
     platform: "North Games",
-    purchasePrice: "$399.99",
+    purchasePrice: 399.99,
     description: "Uma jornada intensa em reinos antigos.",
   },
   {
@@ -40,7 +56,7 @@ const games = [
     year: 2021,
     rating: 4.0, // Adicione a classificação aqui
     platform: "North Games",
-    purchasePrice: "$499.99",
+    purchasePrice: 499.99,
     description: "Um jogo de futebol incrível.",
   },
   {
@@ -53,7 +69,7 @@ const games = [
     year: 2020,
     rating: 4.0, // Adicione a classificação aqui
     platform: "North Games",
-    purchasePrice: "$599.99",
+    purchasePrice: 599.99,
     description: "Uma aventura mágica empolgante.",
   },
   {
@@ -66,12 +82,12 @@ const games = [
     year: 2023,
     rating: 3.0, // Adicione a classificação aqui
     platform: "North Games",
-    purchasePrice: "$699.99",
+    purchasePrice: 699.99,
     description: "Um jogo de ação de tirar o fôlego.",
   },
   {
     id: 6,
-    name: "One Piece PS4",
+    name: "One Piece Seeker PS4",
     brand: "PS4",
     imageUrl:
       "https://ik.imagekit.io/netdmdufko/jogo%20one%20piece%20ps4.webp?updatedAt=1729518490566",
@@ -79,12 +95,13 @@ const games = [
     year: 2022,
     rating: 5.0, // Adicione a classificação aqui
     platform: "North Games",
-    purchasePrice: "$799.99",
+    purchasePrice: 799.99,
     description: "Uma aventura repleta de mistérios.",
+    redirectPath: "/seeker"
   },
   {
     id: 7,
-    name: "One Piece Unlimited World PS4",
+    name: "One Piece Unlimited PS4",
     brand: "PS4",
     imageUrl:
       "https://ik.imagekit.io/netdmdufko/one%20piece%20jogo%20ps4%202.jpeg?updatedAt=1729519209697",
@@ -92,7 +109,7 @@ const games = [
     year: 2021,
     rating: 5.0, // Adicione a classificação aqui
     platform: "North Games",
-    purchasePrice: "$899.99",
+    purchasePrice: 899.99,
     description: "Uma jornada cheia de aventuras.",
   },
   {
@@ -105,7 +122,7 @@ const games = [
     year: 2020,
     rating: 4.0, // Adicione a classificação aqui
     platform: "North Games",
-    purchasePrice: "$99.99",
+    purchasePrice: 99.99,
     description: "Um jogo de luta eletrizante.",
   },
   {
@@ -118,7 +135,7 @@ const games = [
     year: 2023,
     rating: 5.0, // Adicione a classificação aqui
     platform: "North Games",
-    purchasePrice: "$109.99",
+    purchasePrice: 109.99,
     description: "Uma nova jornada épica começa.",
   },
 ];
@@ -126,7 +143,7 @@ const games = [
 const Home = () => {
   const [filtros, setFiltros] = useState({
     precoMax: 1000,
-    marcas: [] as string[],  // Ajuste para um array de strings
+    marcas: [] as string[],
     classificacao: 3,
   });
 
@@ -140,13 +157,17 @@ const Home = () => {
   const jogosFiltrados = games.filter((game) => {
     const marcaMatch = filtros.marcas.length === 0 || filtros.marcas.includes(game.brand);
     const classificacaoMatch = game.rating >= filtros.classificacao;
-    const precoMatch = parseFloat(game.purchasePrice.replace("$", "")) <= filtros.precoMax;
+
+    // Assumindo que purchasePrice é um número
+    const precoMatch = game.purchasePrice <= filtros.precoMax;
+
     const categoriaMatch = selectedCategory === null || game.category === selectedCategory;
 
     return marcaMatch && classificacaoMatch && precoMatch && categoriaMatch;
-  });
+});
 
   const categories = [
+    // ... (suas categorias)
     {
       imageCategory:
         "https://ik.imagekit.io/netdmdufko/categoria%20simulador.jpeg?updatedAt=1730249903151",
@@ -168,6 +189,7 @@ const Home = () => {
       category: "Esporte",
     },
     // ... (outras categorias)
+    
   ];
 
   const renderCategoriesIcons = (icons: { category: string; imageCategory: string }[]) => (
@@ -178,11 +200,12 @@ const Home = () => {
           className="tech-item flex flex-col items-center cursor-pointer mb-1"
           onClick={() => setSelectedCategory(selectedCategory === icon.category ? null : icon.category)}
         >
-          <img
-            src={icon.imageCategory}
-            alt={icon.category}
-            className={`w-16 h-16 rounded-full ${selectedCategory === icon.category ? "border-2 border-blue-500" : ""}`}
-          />
+         <img
+  src={icon.imageCategory}
+  alt={icon.category}
+  className={`w-16 h-16 rounded-full ${selectedCategory === icon.category ? "border-2 border-blue-500" : ""}`}
+/>
+
           <span className="text-center">{icon.category}</span>
         </div>
       ))}
@@ -215,9 +238,7 @@ const Home = () => {
 
             <div className="w-full max-w-4x4 p-4 mt-5 shadow-md rounded-lg md:hidden">
               <div className="animate-marquee">
-                <h3 className="flex font-bold mb-3 justify-start">
-                  Navegue por categoria
-                </h3>
+                <h3 className="flex font-bold mb-3 justify-start">Navegue por categoria</h3>
                 {renderCategoriesIcons(categories)}
               </div>
             </div>
@@ -228,7 +249,7 @@ const Home = () => {
               </div>
 
               <div className="w-full md:w-3/4 flex flex-col items-center">
-                <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
+                <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8">
                   {jogosFiltrados.length > 0 ? (
                     jogosFiltrados.map((game) => (
                       <Card
@@ -241,7 +262,8 @@ const Home = () => {
                         platform={game.platform}
                         purchasePrice={game.purchasePrice}
                         description={game.description}
-                      />
+                        redirectPath={game.redirectPath || "/fallback"} id={0}                    />
+                    
                     ))
                   ) : (
                     <div className="flex items-center justify-center w-full h-5 mx-auto">
@@ -256,6 +278,5 @@ const Home = () => {
       </div>
     </>
   );
-};
-
+};  
 export default Home;
