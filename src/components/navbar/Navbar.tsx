@@ -1,15 +1,18 @@
 import { HiMenu, HiX } from "react-icons/hi";
 import { useMenu } from "../../context/Context";
+import { Link } from "react-router-dom";
 
 export const Navbar = () => {
   const { isMenuOpen, toggleMenu } = useMenu(); // Controle de visibilidade pelo contexto
 
   return (
     <div className="flex items-center py-5 pb-2 pt-2 md:pt-5 md:pb-5 mr-10 justify-between space-x-4 overflow-auto">
-      <a href="/"><h2 className="text-xl font-bold ml-10">
-        <span className="text-blabk">North</span>
-        <span className="text-black">Games</span>
-      </h2> </a>
+      <Link to="/">
+        <h2 className="text-xl font-bold ml-10">
+          <span className="text-black">North</span>
+          <span className="text-black">Games</span>
+        </h2>
+      </Link>
 
       <button
         onClick={toggleMenu}
@@ -27,15 +30,15 @@ export const Navbar = () => {
         className="items-center gap-5 mr-10 hidden md:flex"
       >
         <li>
-          <a href="#">Comprar</a>
+          <Link to="#">Comprar</Link>
         </li>
         <li>
-          <a href="#">Ofertas</a>
+          <Link to="#">Ofertas</Link>
         </li>
         <li>
-          <a href="#" className="hover:text-gray-400">
+          <Link to="/cart" className="hover:text-gray-400">
             <i className="fas fa-shopping-cart"></i>
-          </a>
+          </Link>
         </li>
       </ul>
 
@@ -58,15 +61,15 @@ export const Navbar = () => {
             className="flex flex-col items-center gap-5 py-5"
           >
             <li>
-              <a href="#">Comprar</a>
+              <Link to="#">Comprar</Link>
             </li>
             <li>
-              <a href="#">Ofertas</a>
+              <Link to="#">Ofertas</Link>
             </li>
             <li>
-              <a href="#" className="hover:text-gray-400">
+              <Link to="/cart" className="hover:text-gray-400">
                 <i className="fas fa-shopping-cart"></i>
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
