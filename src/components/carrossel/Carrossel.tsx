@@ -7,7 +7,7 @@ import "swiper/css/pagination";
 
 import "./Carrossel.css";
 
-function Home() {
+function Carrossel() {
     return (
         <>
             <Swiper
@@ -46,4 +46,4 @@ function Home() {
     )
 }
 
-export default Home;
+export default Carrossel;
