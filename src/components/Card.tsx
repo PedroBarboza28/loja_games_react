@@ -11,7 +11,6 @@ interface CardProps {
   platform: string;
   rating: number;
   purchasePrice: number;
-  description: string;
   redirectPath: string;
 }
 
@@ -24,7 +23,6 @@ const Card: React.FC<CardProps> = ({
   platform,
   rating,
   purchasePrice,
-  description,
   redirectPath,
 }) => {
   const { addToCart } = useCart(); // Obtendo a função addToCart do contexto

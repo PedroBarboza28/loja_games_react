@@ -70,9 +70,9 @@ export const Filtro: React.FC<FiltroProps> = ({ onFiltrar }) => {
       <div id="preco" className="p-3">
         <h3 className="flex items-center font-bold mb-2">Preço</h3>
         <div className="flex items-center mb-2">
-          <span className="font-bold text-[#0f1111]">R$0</span>
-          <span className="font-bold mx-2">-</span>
           <span className="font-bold text-[#0f1111]">R${precoMax}</span>
+          <span className="font-bold mx-2">-</span>
+          <span className="font-bold text-[#0f1111]">R$1000</span>
         </div>
 
         <input

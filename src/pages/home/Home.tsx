@@ -261,7 +261,6 @@ const Home = () => {
                         rating={game.rating}
                         platform={game.platform}
                         purchasePrice={game.purchasePrice}
-                        description={game.description}
                         redirectPath={game.redirectPath || "/fallback"} id={0}                    />
                     
                     ))
